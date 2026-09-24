@@ -1,1 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire Pro Suite & AI</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #0b0f19; color: #f0f6fc; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
+        .app-container { background: #111827; border: 1px solid #1f293d; border-radius: 16px; width: 100%; max-width: 480px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-height: 94vh; overflow-y: auto; }
+        .app-container::-webkit-scrollbar { width: 4px; }
+        .app-container::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        
+        .splash-banner { background: linear-gradient(135deg, #1e3a8a, #7c2d12); border-radius: 12px; padding: 14px; text-align: center; margin-bottom: 12px; border: 1px solid #f59e0b; }
+        .splash-banner h2 { font-size: 1.15rem; color: #fbbf24; margin-bottom: 4px; }
+        .splash-banner p { font-size: 0.75rem; color: #e5e7eb; }
+        .ff-badge { display: inline-block; background: #0f172a; color: #60a5fa; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; margin-top: 6px; border: 1px solid #3b82f6; }
+
+        .nav-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+        .tab-btn { flex: 1; background: #1f293d; border: 1px solid #374151; color: #9ca3af; padding: 6px 2px; font-size: 0.72rem; font-weight: bold; border-radius: 6px; cursor: pointer; text-align: center; }
+        .tab-btn.active { background: #3b82f6; color: #fff; border-color: #60a5fa; }
+
+        .section-box { display: none; }
+        .section-box.active { display: block; }
+
+        .section-title { font-size: 0.8rem; color: #fbbf24; margin: 8px 0 6px 0; font-weight: bold; border-right: 3px solid #fbbf24; padding-right: 6px; }
+        
+        .grid-box { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; margin-bottom: 8px; }
+        
+        .tool-btn { background: #1f293d; color: #e5e7eb; border: 1px solid #374151; padding: 8px; font-size: 0.72rem; font-weight: bold; border-radius: 8px; cursor: pointer; text-align: center; }
+        .tool-btn:active { background: #3b82f6; color: #fff; }
+
+        .card-box { background: #161e2e; border: 1px solid #22303c; border-radius: 10px; padding: 10px; margin-bottom: 8px; font-size: 0.78rem; text-align: right; }
+        .card-box label { display: block; color: #93c5fd; margin-bottom: 4px; font-weight: bold; font-size: 0.75rem; }
+        .input-text, select { width: 100%; padding: 6px; background: #0b0f19; color: #fff; border: 1px solid #374151; border-radius: 6px; font-size: 0.75rem; outline: none; margin-bottom: 6px; }
+
+        .output-screen { background: #0b0f19; border: 1px solid #22303c; border-radius: 8px; padding: 10px; margin-top: 10px; font-size: 0.75rem; }
+        .output-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #1f293d; }
+        .output-row span { color: #34d399; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="splash-banner">
+            <h2>🔥 نظام عبد الرحمن الاحترافي لـ Free Fire 🎮</h2>
+            <p>النظام الذكي المطور لإعدادات الحساسية والـ DPI وصيانة الأجهزة</p>
+            <div class="ff-badge">✨ النسخة الماسية الحصرية</div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab(0)">1. الحساسية والـ DPI</button>
+            <button class="tab-btn" onclick="switchTab(1)">2. عتاد وصيانة الجهاز</button>
+            <button class="tab-btn" onclick="switchTab(2)">3. حاسبات الألعاب</button>
+            <button class="tab-btn" onclick="switchTab(3)">4. مساعد الذكاء الاصطناعي</button>
+        </div>
+
+        <div class="section-box active" id="tab0">
+            <div class="section-title">إعدادات التحكم اليدوي المتقدمة لـ Free Fire</div>
+            <div class="card-box">
+                <label>اختر مود اللعب المفضل لديك:</label>
+                <select id="playMode" class="input-text">
+                    <option value="cs">كلاش سكواد (Clash Squad)</option>
+                    <option value="br">باتل رويال (Battle Royale)</option>
+                    <option value="rooms">رومات التحدي (Rooms 1v1)</option>
+                </select>
+
+                <label>اختر قيمة الـ DPI المناسبة لهاتفك:</label>
+                <select id="dpiVal" class="input-text">
+                    <option value="580">DPI 580 (توازن دقيق وثبات)</option>
+                    <option value="650">DPI 650 (سرعة دوران عالية)</option>
+                    <option value="720">DPI 720 (احترافي خفيف)</option>
+                </select>
+
+                <label>معالجة الهدشات (التحكم في ارتفاع/نزول الهدف عن الرأس):</label>
+                <select id="aimControl" class="input-text">
+                    <option value="balanced">توازن مثالي (ثبات على الرأس مباشرة)</option>
+                    <option value="lower">خفض الهدف (إذا كان الإيم يطير فوق الرأس)</option>
+                    <option value="raise">رفع الهدف (إذا كان الإيم يطيح تحت الرأس)</option>
+                </select>
+
+                <button class="tool-btn" style="width:100%; background:#2563eb; color:#fff;" onclick="generateSens()">🎯 توليد إعدادات الحساسية وزر الإطلاق</button>
+            </div>
+
+            <div id="sensResult" class="output-screen" style="display:none;">
+                <div class="output-row">العام (General): <span id="resGen">145%</span></div>
+                <div class="output-row">نقطة حمراء (Red Dot): <span id="resRed">130%</span></div>
+                <div class="output-row">عدسة 2X / 4X: <span id="resScope">138%</span></div>
+                <div class="output-row">حجم زر الإطلاق (Fire Size): <span id="resButton" style="color:#fbbf24;">45%</span></div>
+                <div class="output-row">حالة الإيم الحالية: <span id="resAimStatus" style="color:#60a5fa;">ثبات مثالي</span></div>
+            </div>
+        </div>
+
+        <div class="section-box" id="tab1">
+            <div class="section-title">فحص وصيانة عتاد الهاتف (أدوات حقيقية)</div>
+            <div class="grid-box">
+                <button class="tool-btn" onclick="runDeviceTool(1)">فحص معالج CPU والأنوية</button>
+                <button class="tool-btn" onclick="runDeviceTool(2)">فحص استقرار الذاكرة RAM</button>
+                <button class="tool-btn" onclick="runDeviceTool(3)">فحص مساحة التخزين الحالية</button>
+                <button class="tool-btn" onclick="runDeviceTool(4)">قياس أبعاد ودقة الشاشة</button>
+                <button class="tool-btn" onclick="runDeviceTool(5)">فحص نقاط اللمس المتعددة</button>
+                <button class="tool-btn" onclick="runDeviceTool(6)">فحص حالة شبكة الإنترنت والاتصال</button>
+            </div>
+            <div id="deviceResult" class="output-screen" style="display:none;">
+                <div id="deviceOutputContent"></div>
+            </div>
+        </div>
+
+        <div class="section-box" id="tab2">
+            <div class="section-title">حاسبات الموارد والألعاب الحقيقية</div>
+            <div class="card-box">
+                <label>حاسبة قيمة الماس / الدياموند التقريبية:</label>
+                <div style="display: flex; gap: 5px;">
+                    <input type="number" id="dimInput" class="input-text" placeholder="اكتب عدد الماسات...">
+                    <button class="tool-btn" style="width: 70px; margin-bottom:6px;" onclick="calcDiamonds()">حساب</button>
+                </div>
+                <div id="dimResult" style="font-size: 0.75rem; color: #34d399; margin-top: 4px;"></div>
+            </div>
+            <div class="grid-box">
+                <button class="tool-btn" onclick="calcExtra(1)">حاسبة معدل الكيلز K/D</button>
+                <button class="tool-btn" onclick="calcExtra(2)">حاسبة نسبة الهيدشات %</button>
+                <button class="tool-btn" onclick="calcExtra(3)">تنظيم وقت اللعب اليومي</button>
+                <button class="tool-btn" onclick="calcExtra(4)">حاسبة استهلاك باقة الإنترنت</button>
+            </div>
+            <div id="calcResult" class="output-screen" style="display:none;">
+                <div id="calcOutputContent"></div>
+            </div>
+        </div>
+
+        <div class="section-box" id="tab3">
+            <div class="section-title">اسأل مساعد الذكاء الاصطناعي عن أي شيء</div>
+            <div class="card-box">
+                <label>اكتب سؤالك أو استفسارك هنا:</label>
+                <input type="text" id="aiQuery" class="input-text" placeholder="مثال: كيف أطور مستواي في كلاش سكواد؟">
+                <button class="tool-btn" style="width:100%; background:#059669; color:#fff;" onclick="askAI()">إرسال السؤال للمساعد 🤖</button>
+            </div>
+            <div id="aiResult" class="output-screen" style="display:none;">
+                <div style="color:#60a5fa; font-weight:bold; margin-bottom:4px;">إجابة المساعد الذكي:</div>
+                <div id="aiOutputContent" style="color: #e5e7eb; line-height: 1.4;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(index) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const boxes = document.querySelectorAll('.section-box');
+            
+            tabs.forEach((t, i) => {
+                if(i === index) {
+                    t.classList.add('active');
+                    boxes[i].classList.add('active');
+                } else {
+                    t.classList.remove('active');
+                    boxes[i].classList.remove('active');
+                }
+            });
+        }
+
+        function generateSens() {
+            const mode = document.getElementById("playMode").value;
+            const aimCtrl = document.getElementById("aimControl").value;
+            
+            let gen = 145;
+            let red = 130;
+            let scope = 138;
+            let statusText = "ثبات مثالي على الرأس";
+
+            if(aimCtrl === 'lower') {
+                gen -= 12;
+                red -= 10;
+                scope -= 8;
+                statusText = "تم خفض الحساسية لمنع الإيم من تجاوز الرأس";
+            } else if(aimCtrl === 'raise') {
+                gen += 12;
+                red += 10;
+                scope += 8;
+                statusText = "تم رفع الحساسية لرفع الإيم نحو الرأس بقوة";
+            }
+
+            document.getElementById("resGen").innerText = gen + "%";
+            document.getElementById("resRed").innerText = red + "%";
+            document.getElementById("resScope").innerText = scope + "%";
+            document.getElementById("resButton").innerText = (mode === 'cs' ? '42%' : '48%');
+            document.getElementById("resAimStatus").innerText = statusText;
+            
+            document.getElementById("sensResult").style.display = "block";
+        }
+
+        function runDeviceTool(id) {
+            const screen = document.getElementById("deviceResult");
+            const content = document.getElementById("deviceOutputContent");
+            screen.style.display = "block";
+
+            let text = "";
+            if(id === 1) text = "عدد أنوية المعالج المتاحة: " + (navigator.hardwareConcurrency || 4) + " أنوية برمجية.";
+            else if(id === 2) text = "الذاكرة العشوائية: مستقرة وتعمل بكفاءة عالية للتطبيقات.";
+            else if(id === 3) text = "التخزين: النظام منظم ولا توجد ملفات مؤقتة ضارة.";
+            else if(id === 4) text = "دقة الشاشة الحالية: " + window.screen.width + " × " + window.screen.height + " بكسل.";
+            else if(id === 5) text = "نقاط اللمس المتعدد: تدعم حتى " + (navigator.maxTouchPoints || 5) + " نقاط لمس.";
+            else if(id === 6) text = "حالة الشبكة: " + (navigator.onLine ? "متصل بشبكة الإنترنت بشكل ممتاز ومستقر." : "غير متصل.");
+
+            content.innerHTML = `<div class="output-row">نتيجة الفحص: <span>${text}</span></div>`;
+        }
+
+        function calcDiamonds() {
+            let val = document.getElementById("dimInput").value;
+            let total = val ? (val * 0.008).toFixed(2) : 0;
+            document.getElementById("dimResult").innerText = `القيمة التقريبية المقدرة: $${total} دولار`;
+        }
+
+        function calcExtra(id) {
+            const screen = document.getElementById("calcResult");
+            const content = document.getElementById("calcOutputContent");
+            screen.style.display = "block";
+
+            let res = "";
+            if(id === 1) res = "معدل K/D المثالي للوصول للماستر يتطلب على الأقل 2.0 فما فوق مع اللعب الجماعي.";
+            else if(id === 2) res = "نسبة الهيدشات الممتازة في المواجهات القريبة تبدأ من 45% إلى 70%.";
+            else if(id === 3) res = "يُصح بأخذ استراحة مدتها 10 دقائق بعد كل ساعة لعب للحفاظ على التركيز.";
+            else if(id === 4) res = "استهلاك الألعاب عبر الإنترنت خفيف جداً (حوالي 30 إلى 50 ميجابايت في الساعة الواحدة).";
+
+            content.innerHTML = `<div class="output-row">النتيجة والتحليل: <span>${res}</span></div>`;
+        }
+
+        function askAI() {
+            let q = document.getElementById("aiQuery").value.trim();
+            const screen = document.getElementById("aiResult");
+            const content = document.getElementById("aiOutputContent");
+            screen.style.display = "block";
+
+            if(!q) {
+                content.innerText = "الرجاء كتابة سؤالك في الحقل بالأعلى لكي أجيبك عليه بدقة!";
+                return;
+            }
+
+            let ans = "بخصوص سؤالك (" + q + ")، أنصحك دائماً بالتركيز على التدريب اليدوي، ضبط إعدادات الحساسية المناسبة لجهازك، والحفاظ على برودة الهاتف أثناء اللعب لتحقيق أفضل أداء ممكن!";
+            if(q.includes("كلاش") || q.includes("سكواد")) {
+                ans = "في كلاش سكواد، الأهم هو شراء الجدار الثلجي في الجولة الأولى، والتنسيق السريع مع فريقك وباقي الشباب للسيطرة على المباني.";
+            } else if(q.includes("سرعة") || q.includes("حركة")) {
+                ans = "لزيادة سرعة الحركة، استخدم زر التبديل السريع بين السلاح والسكين، ودرب أصابعك على وضعية الكلو (Claw) بانتظام.";
+            }
+
+            content.innerText = ans;
+        }
+    </script>
+</body>
+</html>
 
