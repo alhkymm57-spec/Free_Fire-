@@ -58,6 +58,12 @@
         <div class="section-box active" id="tab0">
             <div class="section-title">إعدادات التحكم اليدوي المتقدمة لـ Free Fire</div>
             <div class="card-box">
+                <label>اختر نظام جهازك:</label>
+                <select id="deviceType" class="input-text">
+                    <option value="ios">آيفون / آيباد (iOS - حساسيه بطيئة من 5 إلى 20)</option>
+                    <option value="android">أندرويد (Android - حساسية قياسية)</option>
+                </select>
+
                 <label>اختر مود اللعب المفضل لديك:</label>
                 <select id="playMode" class="input-text">
                     <option value="cs">كلاش سكواد (Clash Squad)</option>
@@ -65,7 +71,7 @@
                     <option value="rooms">رومات التحدي (Rooms 1v1)</option>
                 </select>
 
-                <label>اختر قيمة الـ DPI المناسبة لهاتفك:</label>
+                <label>اختر قيمة الـ DPI / تتبع الشاشة:</label>
                 <select id="dpiVal" class="input-text">
                     <option value="580">DPI 580 (توازن دقيق وثبات)</option>
                     <option value="650">DPI 650 (سرعة دوران عالية)</option>
@@ -83,9 +89,9 @@
             </div>
 
             <div id="sensResult" class="output-screen" style="display:none;">
-                <div class="output-row">العام (General): <span id="resGen">145%</span></div>
-                <div class="output-row">نقطة حمراء (Red Dot): <span id="resRed">130%</span></div>
-                <div class="output-row">عدسة 2X / 4X: <span id="resScope">138%</span></div>
+                <div class="output-row">العام (General): <span id="resGen">15%</span></div>
+                <div class="output-row">نقطة حمراء (Red Dot): <span id="resRed">12%</span></div>
+                <div class="output-row">عدسة 2X / 4X: <span id="resScope">10%</span></div>
                 <div class="output-row">حجم زر الإطلاق (Fire Size): <span id="resButton" style="color:#fbbf24;">45%</span></div>
                 <div class="output-row">حالة الإيم الحالية: <span id="resAimStatus" style="color:#60a5fa;">ثبات مثالي</span></div>
             </div>
@@ -159,24 +165,47 @@
         }
 
         function generateSens() {
+            const dev = document.getElementById("deviceType").value;
             const mode = document.getElementById("playMode").value;
             const aimCtrl = document.getElementById("aimControl").value;
             
-            let gen = 145;
-            let red = 130;
-            let scope = 138;
+            let gen, red, scope;
             let statusText = "ثبات مثالي على الرأس";
 
-            if(aimCtrl === 'lower') {
-                gen -= 12;
-                red -= 10;
-                scope -= 8;
-                statusText = "تم خفض الحساسية لمنع الإيم من تجاوز الرأس";
-            } else if(aimCtrl === 'raise') {
-                gen += 12;
-                red += 10;
-                scope += 8;
-                statusText = "تم رفع الحساسية لرفع الإيم نحو الرأس بقوة";
+            if (dev === 'ios') {
+                // إعدادات مخصصة للايفون والايباد بحساسية بطيئة ودقيقة بين 5 و 20
+                gen = 15;
+                red = 12;
+                scope = 10;
+
+                if(aimCtrl === 'lower') {
+                    gen = 8;
+                    red = 6;
+                    scope = 5;
+                    statusText = "حساسية بطيئة جداً لمنع طيران الإيم فوق الرأس";
+                } else if(aimCtrl === 'raise') {
+                    gen = 20;
+                    red = 18;
+                    scope = 15;
+                    statusText = "رفع الحساسية قليلاً في حدود الـ 20 لرفع الإيم للرأس";
+                }
+            } else {
+                // الإعدادات القياسية للأندرويد
+                gen = 145;
+                red = 130;
+                scope = 138;
+
+                if(aimCtrl === 'lower') {
+                    gen -= 12;
+                    red -= 10;
+                    scope -= 8;
+                    statusText = "تم خفض الحساسية لمنع الإيم من تجاوز الرأس";
+                } else if(aimCtrl === 'raise') {
+                    gen += 12;
+                    red += 10;
+                    scope += 8;
+                    statusText = "تم رفع الحساسية لرفع الإيم نحو الرأس بقوة";
+                }
             }
 
             document.getElementById("resGen").innerText = gen + "%";
@@ -218,7 +247,7 @@
             let res = "";
             if(id === 1) res = "معدل K/D المثالي للوصول للماستر يتطلب على الأقل 2.0 فما فوق مع اللعب الجماعي.";
             else if(id === 2) res = "نسبة الهيدشات الممتازة في المواجهات القريبة تبدأ من 45% إلى 70%.";
-            else if(id === 3) res = "يُصح بأخذ استراحة مدتها 10 دقائق بعد كل ساعة لعب للحفاظ على التركيز.";
+            else if(id === 3) res = "يُنصح بأخذ استراحة مدتها 10 دقائق بعد كل ساعة لعب للحفاظ على التركيز.";
             else if(id === 4) res = "استهلاك الألعاب عبر الإنترنت خفيف جداً (حوالي 30 إلى 50 ميجابايت في الساعة الواحدة).";
 
             content.innerHTML = `<div class="output-row">النتيجة والتحليل: <span>${res}</span></div>`;
